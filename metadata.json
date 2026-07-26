@@ -1,0 +1,6 @@
+{
+  "name": "Nourish Kids — Family Food & Meal Budget Assistant",
+  "description": "A compassionate, practical app to help parents feed their kids on tight budgets, stretch pantry ingredients, find emergency community food resources, and create child-friendly nutritious meals.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
