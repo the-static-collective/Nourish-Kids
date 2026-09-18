@@ -20,20 +20,12 @@ export const GroceryBudgetTracker: React.FC = () => {
 
   const [expenses, setExpenses] = useState<ExpenseItem[]>(() => {
     try {
-      const saved = localStorage.getItem("nourish_grocery_expenses");
-      if (saved) return JSON.parse(saved);
-    } catch {}
-    return [
-      { id: "e1", name: "Rolled Oats (Big Container)", cost: 3.80, category: "Grains" },
-      { id: "e2", name: "Large Eggs (1 Dozen)", cost: 2.50, category: "Protein" },
-      { id: "e3", name: "Store Brand Peanut Butter (28 oz)", cost: 2.80, category: "Protein" },
-      { id: "e4", name: "Canned Diced Tomatoes (3 cans)", cost: 2.25, category: "Canned / Pantry" },
-      { id: "e5", name: "Black Beans & Pinto Beans (4 cans)", cost: 3.20, category: "Canned / Pantry" },
-      { id: "e6", name: "White Rice (3 lb bag)", cost: 2.30, category: "Grains" },
-      { id: "e7", name: "Frozen Peas & Corn (2 bags)", cost: 2.80, category: "Produce" },
-      { id: "e8", name: "Bananas & Apples", cost: 3.50, category: "Produce" },
-      { id: "e9", name: "Cheddar Cheese Block", cost: 2.50, category: "Dairy" },
-    ];
+      return initialExpensesFromStorage(
+        localStorage.getItem("nourish_grocery_expenses"),
+      );
+    } catch {
+      return [];
+    }
   });
 
   const [itemName, setItemName] = useState("");
@@ -75,19 +67,9 @@ export const GroceryBudgetTracker: React.FC = () => {
     setExpenses(expenses.filter((e) => e.id !== id));
   };
 
-  const handleResetSample = () => {
-    setWeeklyBudget(75.0);
-    setExpenses([
-      { id: "e1", name: "Rolled Oats (Big Container)", cost: 3.80, category: "Grains" },
-      { id: "e2", name: "Large Eggs (1 Dozen)", cost: 2.50, category: "Protein" },
-      { id: "e3", name: "Store Brand Peanut Butter (28 oz)", cost: 2.80, category: "Protein" },
-      { id: "e4", name: "Canned Diced Tomatoes (3 cans)", cost: 2.25, category: "Canned / Pantry" },
-      { id: "e5", name: "Black Beans & Pinto Beans (4 cans)", cost: 3.20, category: "Canned / Pantry" },
-      { id: "e6", name: "White Rice (3 lb bag)", cost: 2.30, category: "Grains" },
-      { id: "e7", name: "Frozen Peas & Corn (2 bags)", cost: 2.80, category: "Produce" },
-      { id: "e8", name: "Bananas & Apples", cost: 3.50, category: "Produce" },
-      { id: "e9", name: "Cheddar Cheese Block", cost: 2.50, category: "Dairy" },
-    ]);
+  const handleLoadSample = () => {
+    setWeeklyBudget(75);
+    setExpenses(SAMPLE_EXPENSES.map((item) => ({ ...item })));
   };
 
   const costCuttingTips = [
@@ -291,9 +273,9 @@ export const GroceryBudgetTracker: React.FC = () => {
             </h3>
 
             <button
-              onClick={handleResetSample}
+              onClick={handleLoadSample}
               className="text-xs text-[#6e5d50] hover:text-[#b85a22] font-semibold flex items-center gap-1"
-              title="Reset to sample budget items"
+              title="Load clearly labeled sample budget items"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Load Sample Cart</span>
