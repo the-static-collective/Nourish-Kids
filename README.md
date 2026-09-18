@@ -118,6 +118,28 @@ npm start
 
 ---
 
+## FULFILLMENT / The Last Mile v0
+
+Nourish contains an experimental local-first fulfillment specimen.
+
+The reviewed pantry flow distinguishes:
+
+- explicitly available requirements;
+- explicitly missing requirements;
+- undeclared/unknown requirements.
+
+A recipe is never labeled **Can make now** from a partial ingredient match. Reviewed ingredient quantities scale to the declared number of people being fed, while equipment requirements do not multiply.
+
+Known missing requirements can be projected into a local `fulfillment-envelope/v0` preview. The preview includes only the requirements the user selected and begins with `status: "unmet"`.
+
+The fulfillment-envelope path does not send requests to Jubilee Campfire or any external service. The optional existing Gemini ideas remain a separate networked feature. V0 does not rank needs, infer deservingness, or claim real-world fulfillment. AI-generated meal ideas remain visibly separate from the reviewed local truth-state gate.
+
+The first proof is only that one missing dinner requirement can cross the Nourish boundary without gaining facts, losing uncertainty, or leaking the rest of the pantry.
+
+Verification: `npm test`, `npm run lint`, and `npm run build`.
+
+---
+
 ## 📜 License
 
 This project is open-source and released under the **MIT License**.
