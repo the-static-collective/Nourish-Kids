@@ -14,6 +14,7 @@ import {
 import { CURATED_RECIPES } from "../data/curatedRecipes";
 import {
   REVIEWED_RECIPES,
+  admitReviewedRecipes,
   deriveResourceCatalog,
 } from "../data/reviewedRecipes.ts";
 import {
@@ -38,7 +39,10 @@ interface PantryStretchViewProps {
   onToggleSave: (recipe: Recipe) => void;
 }
 
-const RESOURCE_CATALOG = deriveResourceCatalog(REVIEWED_RECIPES);
+const REVIEWED_ADMISSION = admitReviewedRecipes(REVIEWED_RECIPES);
+const ACTIVE_REVIEWED_RECIPES = REVIEWED_ADMISSION.recipes;
+const REVIEWED_DATA_ERRORS = REVIEWED_ADMISSION.errors;
+const RESOURCE_CATALOG = deriveResourceCatalog(ACTIVE_REVIEWED_RECIPES);
 const NUMBER_FORMAT = new Intl.NumberFormat(undefined, {
   maximumFractionDigits: 3,
 });
@@ -96,7 +100,7 @@ export const PantryStretchView: React.FC<PantryStretchViewProps> = ({
 
   const aiIngredients = [...new Set([...declaredAiIngredients, ...customAiIngredients])];
 
-  const reviewedResults = REVIEWED_RECIPES.map((baseRecipe) => {
+  const reviewedResults = ACTIVE_REVIEWED_RECIPES.map((baseRecipe) => {
     const recipe = scaleReviewedRecipe(baseRecipe, peopleToFeed);
     return {
       recipe,
@@ -383,6 +387,15 @@ export const PantryStretchView: React.FC<PantryStretchViewProps> = ({
             {reviewedResults.length} reviewed
           </span>
         </div>
+
+        {REVIEWED_DATA_ERRORS.length > 0 && (
+          <div
+            role="alert"
+            className="rounded-xl border border-[#f8d7d7] bg-[#fdf2f2] p-4 text-xs text-[#b82a2a]"
+          >
+            Reviewed recipe data failed validation, so no reviewed recipe is being presented as makeable.
+          </div>
+        )}
 
         <div className="grid lg:grid-cols-2 gap-5">
           {reviewedResults.map(({ recipe, evaluation, legacyRecipe }) => {
