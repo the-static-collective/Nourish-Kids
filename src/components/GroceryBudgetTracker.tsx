@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { DollarSign, Plus, Trash2, TrendingDown, PieChart, AlertTriangle, CheckCircle2, Lightbulb, ShoppingCart, Percent, RotateCcw } from "lucide-react";
+import { DollarSign, Plus, Trash2, ShoppingCart, Percent, RotateCcw } from "lucide-react";
+import {
+  SAMPLE_EXPENSES,
+  initialExpensesFromStorage,
+  type ExpenseItem,
+} from "../budget/budgetState.ts";
 
-interface ExpenseItem {
-  id: string;
-  name: string;
-  cost: number;
-  category: "Produce" | "Protein" | "Dairy" | "Grains" | "Canned / Pantry" | "Snacks";
-}
 
 export const GroceryBudgetTracker: React.FC = () => {
   const [weeklyBudget, setWeeklyBudget] = useState<number>(() => {
