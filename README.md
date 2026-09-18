@@ -134,7 +134,7 @@ Known missing requirements can be projected into a local `fulfillment-envelope/v
 
 V0 does not send requests to Jubilee Campfire or any external service. It does not rank needs, infer deservingness, or claim real-world fulfillment. AI-generated meal ideas remain visibly separate from the reviewed local truth-state gate.
 
-The first proof is only that one missing dinner requirement can cross the Nourish boundary without gaining facts, losing uncertainty, or leaking the rest of the pantry.
+The first proof is only that one missing dinner requirement can cross the Nourish boundary without gaining facts, losing uncertainty, or leaking the rest of the pantry.\n\nVerification: `npm test`, `npm run lint`, and `npm run build`.
 
 ---
 
