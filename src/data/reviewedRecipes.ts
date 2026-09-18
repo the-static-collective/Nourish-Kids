@@ -256,3 +256,19 @@ export function validateReviewedRecipes(recipes: ReviewedRecipe[]): string[] {
 
   return errors;
 }
+
+
+export interface ReviewedRecipeAdmission {
+  recipes: ReviewedRecipe[];
+  errors: string[];
+}
+
+export function admitReviewedRecipes(
+  recipes: ReviewedRecipe[],
+): ReviewedRecipeAdmission {
+  const errors = validateReviewedRecipes(recipes);
+  return {
+    recipes: errors.length === 0 ? recipes : [],
+    errors,
+  };
+}
