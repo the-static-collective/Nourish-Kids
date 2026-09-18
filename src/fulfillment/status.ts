@@ -146,22 +146,26 @@ function parseStatusPacket(value: unknown): HelpCaseStatusPacketV0 {
     }
     requirementIds.add(requirement.requirementId);
 
+    const requestedQuantity = requirement.requestedQuantity;
+    const confirmedResidualQuantity = requirement.confirmedResidualQuantity;
+
     if (
-      requirement.requestedQuantity !== undefined &&
-      !isFiniteNonNegative(requirement.requestedQuantity)
+      requestedQuantity !== undefined &&
+      !isFiniteNonNegative(requestedQuantity)
     ) {
       throw new Error("INVALID_HELP_CASE_STATUS_QUANTITY");
     }
     if (
-      requirement.confirmedResidualQuantity !== undefined &&
-      !isFiniteNonNegative(requirement.confirmedResidualQuantity)
+      confirmedResidualQuantity !== undefined &&
+      !isFiniteNonNegative(confirmedResidualQuantity)
     ) {
       throw new Error("INVALID_HELP_CASE_STATUS_QUANTITY");
     }
 
-    if (requirement.requestedQuantity !== undefined) {
+    if (requestedQuantity !== undefined) {
       if (
-        requirement.confirmedResidualQuantity === undefined ||
+        !isFiniteNonNegative(requestedQuantity) ||
+        !isFiniteNonNegative(confirmedResidualQuantity) ||
         !isRecord(requirement.conservation) ||
         requirement.conservation.holds !== true ||
         !isFiniteNonNegative(requirement.conservation.requestedPlusExcess) ||
@@ -170,13 +174,26 @@ function parseStatusPacket(value: unknown): HelpCaseStatusPacketV0 {
         throw new Error("HELP_CASE_STATUS_CONSERVATION_REQUIRED");
       }
 
-      const left =
-        requirement.requestedQuantity + requirement.excessResolvedQuantity;
+      const confirmedReceivedQuantity = requirement.confirmedReceivedQuantity;
+      const resolvedElsewhereQuantity = requirement.resolvedElsewhereQuantity;
+      const waivedQuantity = requirement.waivedQuantity;
+      const excessResolvedQuantity = requirement.excessResolvedQuantity;
+
+      if (
+        !isFiniteNonNegative(confirmedReceivedQuantity) ||
+        !isFiniteNonNegative(resolvedElsewhereQuantity) ||
+        !isFiniteNonNegative(waivedQuantity) ||
+        !isFiniteNonNegative(excessResolvedQuantity)
+      ) {
+        throw new Error("INVALID_HELP_CASE_STATUS_QUANTITY");
+      }
+
+      const left = requestedQuantity + excessResolvedQuantity;
       const right =
-        requirement.confirmedReceivedQuantity +
-        requirement.resolvedElsewhereQuantity +
-        requirement.waivedQuantity +
-        requirement.confirmedResidualQuantity;
+        confirmedReceivedQuantity +
+        resolvedElsewhereQuantity +
+        waivedQuantity +
+        confirmedResidualQuantity;
 
       if (
         !nearlyEqual(left, right) ||
