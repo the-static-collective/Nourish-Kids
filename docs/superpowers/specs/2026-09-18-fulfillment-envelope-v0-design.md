@@ -105,6 +105,16 @@ A recipe with known missing requirements is not represented as makeable.
 
 A recipe with unresolved required requirements is not represented as makeable.
 
+When a recipe has both known missing requirements and unresolved requirements, the card's primary state is `missing_requirements` while the full evaluation retains the unknown requirements. Primary-state precedence is therefore:
+
+```text
+missing_requirements
+  > unknown_requirements
+  > can_make_now
+```
+
+Known actionable blockers must not be hidden merely because another fact remains unknown.
+
 ### 4.3 Show the smallest truthful blocker set
 
 The UI presents the requirement structure needed for the immediate action, not every derivable dependency.
