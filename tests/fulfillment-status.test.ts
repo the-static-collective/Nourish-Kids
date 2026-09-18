@@ -30,7 +30,7 @@ const envelope: FulfillmentEnvelopeV0 = {
   status: "unmet",
 };
 
-function packet() {
+function packet(): any {
   return {
     schema: "help-case-status/v0",
     caseId: "help-case:abc",
