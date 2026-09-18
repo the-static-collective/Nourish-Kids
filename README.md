@@ -132,9 +132,11 @@ A recipe is never labeled **Can make now** from a partial ingredient match. Revi
 
 Known missing requirements can be projected into a local `fulfillment-envelope/v0` preview. The preview includes only the requirements the user selected and begins with `status: "unmet"`.
 
-V0 does not send requests to Jubilee Campfire or any external service. It does not rank needs, infer deservingness, or claim real-world fulfillment. AI-generated meal ideas remain visibly separate from the reviewed local truth-state gate.
+The fulfillment-envelope path does not send requests to Jubilee Campfire or any external service. The optional existing Gemini ideas remain a separate networked feature. V0 does not rank needs, infer deservingness, or claim real-world fulfillment. AI-generated meal ideas remain visibly separate from the reviewed local truth-state gate.
 
-The first proof is only that one missing dinner requirement can cross the Nourish boundary without gaining facts, losing uncertainty, or leaking the rest of the pantry.\n\nVerification: `npm test`, `npm run lint`, and `npm run build`.
+The first proof is only that one missing dinner requirement can cross the Nourish boundary without gaining facts, losing uncertainty, or leaking the rest of the pantry.
+
+Verification: `npm test`, `npm run lint`, and `npm run build`.
 
 ---
 
