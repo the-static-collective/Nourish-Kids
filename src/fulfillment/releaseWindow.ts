@@ -21,7 +21,7 @@ export type ReviewCard = {
 const stamp=(value:string):number=>{
   if(!/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ$/.test(value)) throw Error('explicit UTC timestamp required');
   const parsed=Date.parse(value);
-  if(!Number.isFinite(parsed) || new Date(parsed).toISOString()!==value) throw Error('invalid UTC timestamp');
+  if(!Number.isFinite(parsed) || new Date(parsed).toISOString().replace('.000Z', 'Z')!==value) throw Error('invalid UTC timestamp');
   return parsed;
 };
 const ref=(s:string)=>{if(typeof s!=='string'||!s.trim()||s.length>256)throw Error('bounded reference required');return s;};
