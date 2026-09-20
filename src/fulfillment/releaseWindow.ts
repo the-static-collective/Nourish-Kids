@@ -35,7 +35,7 @@ export function projectReleaseWindow(commitments: readonly Commitment[], nowUtc:
     if(!['offered','held','attempted','partial','fulfilled','uncertain'].includes(c.status))throw Error('unknown status');
     const review=c.declaredReviewUtc===null ? null : stamp(c.declaredReviewUtc);
     if(c.lastWitnessRef!==null)ref(c.lastWitnessRef);
-    return {
+    const card:ReviewCard = {
       commitmentId:c.id,resourceRef:c.resourceRef,ownerRef:c.ownerRef,
       disposition:review===null?'review_date_unknown':review<=now?'review_due':'no_review_due',
       observedStatus:c.status,
@@ -43,5 +43,6 @@ export function projectReleaseWindow(commitments: readonly Commitment[], nowUtc:
         'witness_ref_present_for_declared_fulfillment':'not_established',
       proposedActions:['renew','modify','release','reconcile'] as const,
     };
+    return card;
   });
 }
